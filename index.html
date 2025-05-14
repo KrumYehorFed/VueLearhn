@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <!-- code view -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+    <link rel="stylesheet" href="/sass/main.css">
+
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <script src="https://unpkg.com/element-plus"></script>
+
+
+</head>
+
+<body>
+    <div id="app" class="body">
+
+        <div class="ps-list_frame ">
+            <div class="ps-list">
+                <h1>Vue Element+ examples</h1>
+                <div class="ps-list-item" v-for="item in links" :key="item.id">
+                    <iconify-icon icon="logos:vue"></iconify-icon>
+
+
+                    <span v-text="item.data.name"></span>
+
+                    <el-button type="success" :data-link="item.name" @click="setIframe($event)">
+                        <iconify-icon icon="ant-design:play-circle-filled"></iconify-icon>
+                    </el-button>
+                </div>
+            </div>
+
+            <iframe :src="current_frame" frameborder="0"></iframe>
+        </div>
+
+
+        <!-- Code block -->
+        <pre class="w-3/8 h-100">
+            <code class="h-100" ref="codeBlock" >
+            </code>
+        </pre>
+
+    </div>
+    <!-- Highlight.js core -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script type="module">
+
+        import rekaUi from 'https://cdn.jsdelivr.net/npm/reka-ui@2.2.1/+esm'
+
+        async function getData(linka) {
+            const url = linka;
+            try {
+                const response = await fetch("/projects.json");
+                const json = await response.json();
+                return json;
+            } catch (error) {
+                console.error("Помилка:", error.message);
+            }
+        }
+
+        // виклик функції
+        const { createApp } = Vue;
+        createApp({
+            data() {
+                return {
+
+                    switchState: false,
+                    code: "",
+                    links: [],
+                    current_frame: "",
+                };
+            },
+
+            async mounted() {
+                this.links = await getData("/get_dir.php");
+            },
+            methods: {
+                async setIframe($event) {
+                    this.current_frame = "/" + $event.currentTarget.getAttribute("data-link") + "/index.html";
+
+                    const res = await fetch(this.current_frame);
+                    this.code = await res.text();
+
+
+                    this.$refs.codeBlock.textContent = this.code; // 
+
+                    delete this.$refs.codeBlock.dataset.highlighted;
+
+                    hljs.highlightElement(this.$refs.codeBlock);
+                }
+            }
+        })
+            .use(ElementPlus)
+            .mount('#app')
+
+    </script>
+</body>
+
+</html>

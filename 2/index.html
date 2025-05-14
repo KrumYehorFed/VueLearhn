@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="app">
+
+    <button @click="this.vis = !this.vis  ">modal: {{ valic }}</button>
+
+    <div id="block" v-show="this.vis" style="width: 100px; height: 100px; background-color: black;"></div>
+  
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+    createApp({
+      // 🟨 Определяем начальные данные
+      data() {
+        return { 
+          vis: 0, //stored data
+        };
+      },
+    }).mount('#app');
+  </script>
+</body>
+</html>
+
+
+
+

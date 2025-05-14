@@ -1,0 +1,106 @@
+@use 'sass:math';
+
+@use 'element_plus.css';
+@use 'variables';
+
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+// base prefix: project-selector  ps-
+body{
+    font-family: "Inconsolata", monospace;
+  background-color: var(--background-c);
+  color: white;
+}
+div{
+  padding: 0;
+  margin: 0;
+}
+
+iconify-icon{
+  font-size:20px ;
+}
+.ps-side_bar {
+  width: 300px;
+}
+
+.ps-body {
+  display: flex;
+}
+.ps-list_frame{
+  padding:  var(--base-padding);
+
+  width: 100vw;
+  display: flex;
+  & iframe{
+    border: 1px solid rgb(110, 110, 110);
+    padding: var(--base-padding);
+  }
+}
+.ps-list{
+  padding-right:  var(--base-padding);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  
+  width: 350px  ;
+}
+.ps-list-item{
+  padding: var(--base-padding);
+  background-color: var(--background-accent-c);
+  border-radius: var(--main-round);
+
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+$primary-color: #ffcd71;
+
+$font-size: 16px;
+
+
+
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+// Миксин для медиазапросов с минимальной шириной
+@mixin mixs($breakpoint) {
+  @media (min-width: math.div($breakpoint, 1px) + 'px') {
+    @content;
+  }
+}
+
+.box {
+  @include border-radius(10px);
+}
+
+@function calculate-rem($px) {
+  @return math.div($px, 16px) * 1rem;
+}
+
+
+
+.container {
+  font-size: calculate-rem(18px);
+}
+
+.button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: $primary-color;
+}
+
+.submit-btn {
+  @extend .button;
+  background-color: green;
+}
+
+@for $i from 1 through 3 {
+  .col-#{$i} {
+    width: math.div(100%, $i);
+    display: block;
+  }
+}

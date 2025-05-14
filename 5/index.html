@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<style>
+  .selected{
+    font-size: 20px;
+  }
+</style>
+
+<body>
+  <div id="app">
+    <div v-for="(value, key) in buttons">
+      <button @click="setButton($event)" :data-value="key" v-text="value" :class="{selected: selected === key}"></button>
+    </div>
+  </div>
+  <script>
+    const { createApp } = Vue;
+    createApp({
+      data() {
+        return {
+          buttons: { "a": "Option A", "b": "Option B" },
+          selected: "a"
+        };
+      },
+      methods: {
+        setButton($event) {
+          this.selected = value = event.target.getAttribute('data-value');
+          console.log(this.selected);
+        }
+      }
+    }).mount('#app');
+  </script>
+</body>
+
+</html>

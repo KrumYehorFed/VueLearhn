@@ -1,0 +1,19 @@
+# docker-compose.yml
+version: '3'
+
+services:
+  php-apache:
+    build: .
+    container_name: php-apache-vue
+    ports:
+      - "90:80"
+    volumes:
+      - ./000-default.conf:/etc/apache2/sites-available/000-default.conf
+      - ./:/var/www/html/
+    networks:
+      - app-network
+    restart: unless-stopped
+networks:
+  app-network:
+    driver: bridge
+

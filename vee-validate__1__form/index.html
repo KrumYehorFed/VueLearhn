@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+
+<body>
+  <!-- Vue 3 -->
+  <script src="https://unpkg.com/vue@3.5.13/dist/vue.global.js"></script>
+  <!-- VeeValidate -->
+  <script src="https://unpkg.com/vee-validate@4.15.0/dist/vee-validate.iife.js"></script>
+
+  <div id="app">
+    <v-form @submit="onSubmit">
+
+      <v-field name="name" type="text" placeholder="Who are you" :rules="isRequired"></v-field>
+      <error-message name="name"></error-message>
+    
+      <div>
+        <label>Name (must include "-"):</label>
+        <v-field name="name1" type="text"  placeholder="Who are you" />
+        <error-message name="name1" class="error" />
+      </div>
+
+      <div>
+        <label>Email:</label>
+        <v-field name="email2" type="email"  placeholder="Who are you" />
+        <error-message name="email2" class="error" />
+      </div>
+
+      <div>
+        <label>Password:</label>
+        <v-field name="password3" type="password"  placeholder="Who are you" />
+        <error-message name="password3" class="error" />
+      </div>
+      <button>Submit</button>
+    </v-form>
+  </div>
+
+  <script src="mixin.js"></script>
+  <script>
+    const app = Vue.createApp({
+      mixins: [mixin], // mix 
+      setup() {
+          
+      },
+      methods: {
+        onSubmit(values) {
+            alert('Форма валидна!\n' + JSON.stringify(values, null, 2));
+          }
+        },
+    });
+
+    // Глобальная регистрация компонентов vee-validate
+    app.component('v-form', VeeValidate.Form);
+    app.component('v-field', VeeValidate.Field);
+    app.component('error-message', VeeValidate.ErrorMessage);
+
+    app.mount('#app');
+  </script>
+</body>

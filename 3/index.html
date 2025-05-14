@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="app">
+    <input v-model="newItem" placeholder="Введите элемент" />
+    <button @click="addItem">Добавить</button>
+    <ul>
+      <li v-for="(item, index) in items" :key="index">{{ item }}</li>
+    </ul>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          newItem: '',
+          items: []
+        };
+      },
+      methods: {
+        addItem() {
+          if (this.newItem.trim() !== '') { // trim removes spaces
+
+            this.items.push(this.newItem);
+
+            this.newItem = ''; // clear input
+          }
+        }
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="app">
+
+
+      <button @click="increment">Счётчик: {{ count }}</button>
+
+    
+  </div>
+
+  <script>
+    // Определяем миксин
+    const myMixin = {
+      data() {
+        return {
+          count: 0
+        };
+      },
+      methods: {
+        increment() {
+          this.count++;
+        }
+      },
+      mounted() {
+        console.log('MIXED!'); // works first 
+      }
+    };
+  </script>
+
+  <script>
+        const { createApp } = Vue;
+
+    createApp({
+      mixins: [myMixin], // mix 
+
+      mounted() {
+        console.log('Components mounted!');
+      }
+    }).mount('#app');
+
+  </script>
+</body>
+</html>
+
+
+
+

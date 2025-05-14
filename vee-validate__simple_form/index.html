@@ -1,0 +1,43 @@
+<body>
+  <!-- Vue 3 -->
+  <script src="https://unpkg.com/vue@3.5.13/dist/vue.global.js"></script>
+  <!-- VeeValidate -->
+  <script src="https://unpkg.com/vee-validate@4.15.0/dist/vee-validate.iife.js"></script>
+
+
+
+  <div id="app">
+    <v-form @submit="onSubmit">
+      
+      <v-field name="name" type="text" placeholder="Who are you" :rules="isRequired"></v-field>
+      <error-message name="name"></error-message>
+
+      <button>Submit</button>
+    </v-form>
+  </div>
+
+
+  <script>
+
+    const App = {
+      methods: {
+        isRequired(value) {
+          if (!value) {
+            return 'this field is required';
+          }
+          return true;
+        },
+        onSubmit(values) {
+        }
+      }
+    }
+
+    const app = Vue.createApp(App);
+    // gloval components
+    app.component('v-form', VeeValidate.Form);
+    app.component('v-field', VeeValidate.Field);
+    app.component('error-message', VeeValidate.ErrorMessage);
+
+    app.mount('#app');
+  </script>
+</body>
