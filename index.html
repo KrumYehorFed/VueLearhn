@@ -6,7 +6,7 @@
     <!-- code view -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 
-    <link rel="stylesheet" href="sass/main.css">
+    <link rel="stylesheet" href="https://krumyehorfed.github.io/VueLearhn/sass/main.css">
 
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -50,12 +50,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script type="module">
 
+        root = "https://krumyehorfed.github.io/VueLearhn";
+
         import rekaUi from 'https://cdn.jsdelivr.net/npm/reka-ui@2.2.1/+esm'
 
         async function getData(linka) {
             const url = linka;
             try {
-                const response = await fetch("/projects.json");
+                const response = await fetch("projects.json");
                 const json = await response.json();
                 return json;
             } catch (error) {
@@ -75,13 +77,9 @@
                     current_frame: "",
                 };
             },
-
-            async mounted() {
-                this.links = await getData("/get_dir.php");
-            },
             methods: {
                 async setIframe($event) {
-                    this.current_frame = "/" + $event.currentTarget.getAttribute("data-link") + "/index.html";
+                    this.current_frame = "https://krumyehorfed.github.io/VueLearhn/" + $event.currentTarget.getAttribute("data-link") + "/index.html";
 
                     const res = await fetch(this.current_frame);
                     this.code = await res.text();
